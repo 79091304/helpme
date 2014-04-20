@@ -111,14 +111,14 @@ public class getJson {
 	}
 
 	// зЂВс
-	public static int RegisterMeth(String userid, String pwd, String name) {
+	public static int RegisterMeth(String userid, String pwd, String phone) {
 		int back = 0;
 		try {
 			@SuppressWarnings("deprecation")
 			String content = getUrlContent(
 					String.format(
 							"http://125.211.221.147/Default.aspx?register=11&userid=%1$s&pwd=%2$s&name=%3$s",
-							userid, pwd, URLEncoder.encode(name)), 5000);
+							userid, pwd, URLEncoder.encode(phone)), 5000);
 
 			back = Integer.parseInt(content);
 		} catch (Exception e) {
