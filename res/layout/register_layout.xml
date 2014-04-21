@@ -130,13 +130,13 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="5.0dip"
                     android:layout_marginRight="15.0dip"
-                    android:layout_toRightOf="@id/pwd"
+                    android:layout_toRightOf="@+id/pwd"
                     android:background="@drawable/input_bg"
                     android:inputType="numberPassword"
-                    android:password="true"
-                    android:padding="5.0dip" />
+                    android:padding="5.0dip"
+                    android:password="true" />
+
             </RelativeLayout>
 
             <RelativeLayout

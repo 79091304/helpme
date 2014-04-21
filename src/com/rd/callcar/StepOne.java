@@ -17,6 +17,7 @@ import com.rd.callcar.json.getJson;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -54,9 +55,14 @@ public class StepOne extends MapActivity {
 	Button nextStep, back, local;
 	TextView loadText;
 
+	public View popView;
 	App app;
 
 	PopupWindow popup;
+	
+	private double mLat1 = 31.257277; // point1纬度
+	private double mLon1 = 121.501347; // point1经度
+	String temp = "测试信息";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +92,15 @@ public class StepOne extends MapActivity {
 				(int) (116.404 * 1E6)); // 用给定的经纬度构造一个GeoPoint，单位是微度 (度 * 1E6)
 		mMapController.setCenter(point); // 设置地图中心点
 		mMapController.setZoom(18); // 设置地图zoom级别
+
+		// t添加图标标注
+
+		Drawable marker = getResources().getDrawable(R.drawable.iconmarka); // 得到需要标在地图上的资源
+		marker.setBounds(0, 0, marker.getIntrinsicWidth(),
+				marker.getIntrinsicHeight()); // 为maker定义位置和边界
+		mMapView.getOverlays().add(
+				new OverItemT(marker, this, mLat1, mLon1, temp)); // 添加ItemizedOverlay实例到mMapView
+		initPopview();
 
 		// 添加定位图层
 		mLocationOverlay = new MyLocationOverlay(this, mMapView);
@@ -322,6 +337,18 @@ public class StepOne extends MapActivity {
 			return false;
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+
+	private void initPopview() {
+		popView = super.getLayoutInflater().inflate(R.layout.popview, null);
+		mMapView.addView(popView, new MapView.LayoutParams(
+				MapView.LayoutParams.WRAP_CONTENT,
+				MapView.LayoutParams.WRAP_CONTENT, null,
+				MapView.LayoutParams.TOP_LEFT));
+		// 由于气泡的尾巴是在下边居中的,因此要设置成MapView.LayoutParams.BOTTOM_CENTER.
+		// 这里没有给GeoPoint,在onFocusChangeListener中设置
+		// views.add(popView);
+		popView.setVisibility(View.GONE);
 	}
 
 }
