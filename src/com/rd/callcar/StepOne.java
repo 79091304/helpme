@@ -83,7 +83,7 @@ public class StepOne extends MapActivity {
 
 		mMapView = (MapView) findViewById(R.id.bmapView);
 		mMapView.setBuiltInZoomControls(true);
-		// 设置在缩放动画过程中也显示overlay,默认为不绘制
+		// 设置在缩放动画过程中也显示overlay,默认为不绘制 
 		mMapView.setDrawOverlayWhenZooming(true);
 		mMapView.setBuiltInZoomControls(true);
 		// 初始化搜索模块，注册事件监听

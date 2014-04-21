@@ -82,7 +82,7 @@ class OverItemT extends ItemizedOverlay<OverlayItem> {
 						LayoutParams.WRAP_CONTENT, pt,
 						MapView.LayoutParams.BOTTOM_CENTER));
 		mContext.popView.setVisibility(View.VISIBLE);
-		textView1 = (TextView) mContext.findViewById(R.id.map_bubbleTitle);
+		textView1 = (TextView) mContext.findViewById(R.id.map_bubbleTitle); 
 		textView2 = (TextView) mContext.findViewById(R.id.map_bubbleText);
 		textView1.setText("提示信息");
 		textView2.setText(mGeoList.get(i).getSnippet());
