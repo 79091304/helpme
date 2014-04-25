@@ -82,17 +82,17 @@ class OverItemT extends ItemizedOverlay<OverlayItem> {
 						LayoutParams.WRAP_CONTENT, pt,
 						MapView.LayoutParams.BOTTOM_CENTER));
 		mContext.popView.setVisibility(View.VISIBLE);
-		textView1 = (TextView) mContext.findViewById(R.id.map_bubbleTitle); 
+		/*textView1 = (TextView) mContext.findViewById(R.id.); 
 		textView2 = (TextView) mContext.findViewById(R.id.map_bubbleText);
 		textView1.setText("提示信息");
 		textView2.setText(mGeoList.get(i).getSnippet());
 		ImageView imageView = (ImageView) mContext
-				.findViewById(R.id.map_bubbleImage);
+				.findViewById(R.id.p);
 		imageView.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				mContext.popView.setVisibility(View.GONE);
 			}
-		});
+		});*/
 		return true;
 	}
 

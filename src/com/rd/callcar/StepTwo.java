@@ -6,7 +6,6 @@ import com.rd.callcar.data.staticData;
 import com.rd.callcar.db.SQLiteHelper;
 import com.rd.callcar.entity.HistoryBean;
 import com.rd.callcar.entity.PointInfo;
-import com.rd.callcar.json.getJson;
 
 import android.app.Activity;
 import android.app.AlertDialog;

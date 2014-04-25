@@ -95,7 +95,7 @@ public class StepOne extends MapActivity {
 
 		// t添加图标标注
 
-		Drawable marker = getResources().getDrawable(R.drawable.iconmarka); // 得到需要标在地图上的资源
+		Drawable marker = getResources().getDrawable(R.drawable.icon_marka); // 得到需要标在地图上的资源
 		marker.setBounds(0, 0, marker.getIntrinsicWidth(),
 				marker.getIntrinsicHeight()); // 为maker定义位置和边界
 		mMapView.getOverlays().add(
