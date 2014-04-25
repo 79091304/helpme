@@ -17,6 +17,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.preference.PreferenceManager;
 
+import com.rd.callcar.Util.HttpUtils;
 import com.rd.callcar.entity.CallHistory;
 import com.rd.callcar.entity.FeedMsg;
 import com.rd.callcar.entity.PointInfo;
@@ -24,6 +25,8 @@ import com.rd.callcar.entity.UpdataInfo;
 
 public class getJson {
 
+	private static JSONObject result;
+	
 	public static String getAddressByLocal(double longitude, double latitude) {
 		String back = "";
 		java.text.DecimalFormat df = new java.text.DecimalFormat("#.##");
@@ -111,20 +114,17 @@ public class getJson {
 	}
 
 	// 注册
-	public static int RegisterMeth(String userid, String pwd, String phone) {
+	public static int RegisterMeth(String username, String pwd, String phone) {
 		int back = 0;
-		try {
-			@SuppressWarnings("deprecation")
-			String content = getUrlContent(
-					String.format(
-							"http://mm.yue.ifeng.com/appuser/register.htm",
-							userid, pwd, URLEncoder.encode(phone)), 5000);
-
-			back = Integer.parseInt(content);
-		} catch (Exception e) {
-
-		}
-		return back;
+		String url = "http://mm.yue.ifeng.com/appuser/register.htm?username="+URLEncoder.encode(username)+"&pwd="+pwd+"&phone="+phone;
+			String content = getUrlContent(url,5000);
+			try {
+				result = new JSONObject(content);
+				back = result.getInt("code");
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			return back;
 	}
 
 	public static int SendInfo(PointInfo info) {
@@ -175,34 +175,9 @@ public class getJson {
 				.getDefaultSharedPreferences(act.getApplicationContext())
 				.edit().putString("city", city).commit();
 	}
-
+	
 	private static String getUrlContent(String url, int timeOut) {
-		String str = "";
-		try {
-
-			URL aURL = null;
-			try {
-				aURL = new URL(url);
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			}
-
-			URLConnection conn = aURL.openConnection();
-			conn.connect();
-			StringBuilder b = new StringBuilder();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					conn.getInputStream(), "UTF-8"));
-
-			String line;
-			while ((line = reader.readLine()) != null) {
-				b.append(line);
-			}
-			reader.close();
-			str = b.toString();
-		} catch (IOException e) {
-		} catch (Exception e) {
-		}
-		return str;
+		return null;
 	}
 
 	// 取应用版本信息

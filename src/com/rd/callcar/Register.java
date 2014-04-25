@@ -79,12 +79,12 @@ public class Register extends Activity {
 	}
 
 	private void checkValidate() {
-		final String userid = input_userid.getText().toString().trim();
+		final String username = input_userid.getText().toString().trim();
 		final String pwd = input_pwd.getText().toString().trim();
 		final String repwd = input_repwd.getText().toString().trim();
 		final String phone = input_phone.getText().toString().trim();
 
-		if (userid == "") {
+		if (username == "") {
 			ShowToast("请输入用户名！");
 			return;
 		}
@@ -126,7 +126,7 @@ public class Register extends Activity {
 			@Override
 			public void run() {
 				try {
-					int isRegister = getJson.RegisterMeth(userid, pwd, phone);
+					int isRegister = getJson.RegisterMeth(username, pwd, phone);
 					Message message = new Message();
 					message.what = LOGINSUCCESS_MSG;
 					message.obj = isRegister;
