@@ -1,11 +1,5 @@
 package com.rd.callcar.json;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +11,6 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.preference.PreferenceManager;
 
-import com.rd.callcar.Util.HttpUtils;
 import com.rd.callcar.entity.CallHistory;
 import com.rd.callcar.entity.FeedMsg;
 import com.rd.callcar.entity.PointInfo;
@@ -26,6 +19,7 @@ import com.rd.callcar.entity.UpdataInfo;
 public class getJson {
 
 	private static JSONObject result;
+	
 	
 	public static String getAddressByLocal(double longitude, double latitude) {
 		String back = "";
@@ -98,19 +92,20 @@ public class getJson {
 		return back;
 	}
 
-	public static boolean Login(String userid, String pwd) {
-		boolean back = false;
+	public static boolean login(String userid, String pwd) {
+		String url = "http://mm.yue.ifeng.com/applogin/login.htm?username="+userid+"&password="+pwd;
+		int back = 0;
 		try {
-			String content = getUrlContent(
-					String.format(
-							"http://125.211.221.147/Default.aspx?login=11&userid=%1$s&pwd=%2$s",
-							userid, pwd), 5000);
-
-			back = Boolean.parseBoolean(content);
+			String content = getUrlContent(url, 5000);
+			result = new JSONObject(content);
+			back = result.getInt("code");
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
-		return back;
+		if(1 == back){
+			return true;
+		}
+		return false;
 	}
 
 	// зЂВс

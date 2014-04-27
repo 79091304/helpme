@@ -102,7 +102,7 @@ public class Login extends Activity {
 			@Override
 			public void run() {
 				try {
-					boolean isLogin = true;//getJson.Login(userid, pwd);
+					boolean isLogin = getJson.login(userid, pwd);
 					if (isLogin) {
 						Message message = new Message();
 						message.what = LOGINSUCCESS_MSG;
