@@ -29,10 +29,30 @@ import android.util.Log;
  */
 public class HttpUtils {
 	
-	private HttpParams httpParams = null;
+	private static HttpParams httpParams = null;
 	
-    private HttpClient httpClient = null;
+    private static HttpClient httpClient = null;
     
+    private static HttpUtils httpUtils = new HttpUtils();
+    
+    
+    private HttpUtils(){
+    	  // 创建 HttpParams 以用来设置 HTTP 参数（这一部分不是必需的）
+        httpParams = new BasicHttpParams();
+        // 设置连接超时和 Socket 超时，以及 Socket 缓存大小
+        HttpConnectionParams.setConnectionTimeout(httpParams, 20 * 1000);
+        HttpConnectionParams.setSoTimeout(httpParams, 20 * 1000);
+        HttpConnectionParams.setSocketBufferSize(httpParams, 8192);
+        // 设置重定向，缺省为 true
+        HttpClientParams.setRedirecting(httpParams, true);
+        // 设置 user agent
+        String userAgent = "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.2) Gecko/20100115 Firefox/3.6";
+        HttpProtocolParams.setUserAgent(httpParams, userAgent);
+        // 创建一个 HttpClient 实例
+        // 注意 HttpClient httpClient = new HttpClient(); 是Commons HttpClient
+        // 中的用法，在 Android 1.5 中我们需要使用 Apache 的缺省实现 DefaultHttpClient
+        httpClient = new DefaultHttpClient(httpParams);
+    }
 
 	  public String doGet(String url, Map params) {
 	        /* 建立HTTPGet对象 */
@@ -106,22 +126,10 @@ public class HttpUtils {
 	        return strResult;
 	    }
 	    
-	    public HttpClient getHttpClient() {
-	        // 创建 HttpParams 以用来设置 HTTP 参数（这一部分不是必需的）
-	        httpParams = new BasicHttpParams();
-	        // 设置连接超时和 Socket 超时，以及 Socket 缓存大小
-	        HttpConnectionParams.setConnectionTimeout(httpParams, 20 * 1000);
-	        HttpConnectionParams.setSoTimeout(httpParams, 20 * 1000);
-	        HttpConnectionParams.setSocketBufferSize(httpParams, 8192);
-	        // 设置重定向，缺省为 true
-	        HttpClientParams.setRedirecting(httpParams, true);
-	        // 设置 user agent
-	        String userAgent = "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.2) Gecko/20100115 Firefox/3.6";
-	        HttpProtocolParams.setUserAgent(httpParams, userAgent);
-	        // 创建一个 HttpClient 实例
-	        // 注意 HttpClient httpClient = new HttpClient(); 是Commons HttpClient
-	        // 中的用法，在 Android 1.5 中我们需要使用 Apache 的缺省实现 DefaultHttpClient
-	        httpClient = new DefaultHttpClient(httpParams);
-	        return httpClient;
+	    public static  HttpUtils getHttpUtils() {
+	    	if(null == httpUtils){
+	    		return httpUtils = new HttpUtils();
+	    	}
+	        return httpUtils;
 	    }
 }

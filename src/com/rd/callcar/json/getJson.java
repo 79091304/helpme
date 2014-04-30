@@ -1,9 +1,10 @@
 package com.rd.callcar.json;
 
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,6 +12,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.preference.PreferenceManager;
 
+import com.rd.callcar.Util.HttpUtils;
 import com.rd.callcar.entity.CallHistory;
 import com.rd.callcar.entity.FeedMsg;
 import com.rd.callcar.entity.PointInfo;
@@ -25,13 +27,14 @@ public class getJson {
 		String back = "";
 		java.text.DecimalFormat df = new java.text.DecimalFormat("#.##");
 		try {
-			String content = getUrlContent(
+			String content = null; 
+					/*getUrlContent(
 					"http://api.map.baidu.com/geocoder?location="
 							+ df.format(latitude)
 							+ ","
 							+ df.format(longitude)
 							+ "&output=json&key=E3041FEDFA4A24627A4B76539E07658B0FE44A5D",
-					5000);
+					5000);*/
 
 			try {
 				System.out.println(content);
@@ -61,10 +64,11 @@ public class getJson {
 	public static String getAddress(double lang, double lant, Activity act) {
 		String back = "";
 		try {
-			String content = getUrlContent(
+			String content = null; 
+					/*getUrlContent(
 					String.format(
 							"http://api.map.baidu.com/geocoder?location=%1$s,%2$s&output=json&key=E3041FEDFA4A24627A4B76539E07658B0FE44A5D",
-							lang, lant), 5000);
+							lang, lant), 5000);*/
 			try {
 				JSONObject obj = new JSONObject(content);
 
@@ -92,11 +96,20 @@ public class getJson {
 		return back;
 	}
 
-	public static boolean login(String userid, String pwd) {
-		String url = "http://mm.yue.ifeng.com/applogin/login.htm?username="+userid+"&password="+pwd;
+	/**
+	 * 登录
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	public static boolean login(String username, String password) {
+		String url = "http://mm.yue.ifeng.com/applogin/login.htm";
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("username", username));
+		params.add(new BasicNameValuePair("password", password));
 		int back = 0;
 		try {
-			String content = getUrlContent(url, 5000);
+			String content = HttpUtils.getHttpUtils().doPost(url, params);
 			result = new JSONObject(content);
 			back = result.getInt("code");
 		} catch (Exception e) {
@@ -108,11 +121,21 @@ public class getJson {
 		return false;
 	}
 
-	// 注册
+	/**
+	 * 注册
+	 * @param username
+	 * @param pwd
+	 * @param phone
+	 * @return
+	 */
 	public static int RegisterMeth(String username, String pwd, String phone) {
 		int back = 0;
-		String url = "http://mm.yue.ifeng.com/appuser/register.htm?username="+URLEncoder.encode(username)+"&pwd="+pwd+"&phone="+phone;
-			String content = getUrlContent(url,5000);
+		String url = "http://mm.yue.ifeng.com/appuser/register.htm";
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("username", username));
+		params.add(new BasicNameValuePair("password", pwd));
+		params.add(new BasicNameValuePair("phone", phone));
+		String content = HttpUtils.getHttpUtils().doPost(url, params);
 			try {
 				result = new JSONObject(content);
 				back = result.getInt("code");
@@ -126,13 +149,14 @@ public class getJson {
 		int back = 0;
 		try {
 			@SuppressWarnings({ "deprecation" })
-			String content = getUrlContent(
+			String content = null;
+			/*getUrlContent(
 					String.format(
 							"http://125.211.221.147/Default.aspx?send=11&userid=%1$s&city=%2$s&lang=%3$s&lant=%4$s&type=%5$s&destnation=%6$s",
 							info.getUserid(),
 							URLEncoder.encode(info.getCity()), info.getLang(),
 							info.getLant(), URLEncoder.encode(info.getType()),
-							URLEncoder.encode(info.getDestnation())), 5000);
+							URLEncoder.encode(info.getDestnation())), 5000);*/
 
 			back = Integer.parseInt(content);
 
@@ -146,10 +170,7 @@ public class getJson {
 	public static boolean cancelCall(String uSerid, String save) {
 		boolean back = false;
 		try {
-			String content = getUrlContent(
-					String.format(
-							"http://125.211.221.147/Default.aspx?cancel=11&userid=%1$s&seqid=%2$s",
-							uSerid, save), 5000);
+			String content = null;
 
 			back = Boolean.parseBoolean(content);
 		} catch (Exception e) {
@@ -171,16 +192,14 @@ public class getJson {
 				.edit().putString("city", city).commit();
 	}
 	
-	private static String getUrlContent(String url, int timeOut) {
-		return null;
-	}
 
 	// 取应用版本信息
 	public static UpdataInfo getNewsVersion() {
 		UpdataInfo appInfo = null;
 		try {
-			String content = getUrlContent(
-					"http://125.211.221.147/Default.aspx?version=newver", 5000);
+			String content = null;
+					/*getUrlContent(
+					"http://125.211.221.147/Default.aspx?version=newver", 5000);*/
 
 			content = content.replace("[", "").replace("]", "");
 			JSONObject obj = new JSONObject(content.trim());
@@ -200,11 +219,7 @@ public class getJson {
 	public static String ChangePwd(String userid, String oldPwd, String newPwd) {
 		String back = null;
 		try {
-			String content = getUrlContent(
-					String.format(
-							"http://125.211.221.147/Default.aspx?changePwd=11&userid=%1$s&oldPwd=%2$s&newPwd=%3$s",
-							userid, oldPwd, newPwd), 5000);
-
+			String content = null;
 			content = content.trim();
 
 			JSONObject obj = new JSONObject(content);
@@ -223,10 +238,11 @@ public class getJson {
 	public static List<CallHistory> getRecordList(String uSerid, int page) {
 		List<CallHistory> list = null;
 		try {
-			String content = getUrlContent(
+			String content = null;
+					/*getUrlContent(
 					String.format(
 							"http://125.211.221.147/Default.aspx?history=11&userid=%1$s&page=%2$d",
-							uSerid, page), 5000);
+							uSerid, page), 5000);*/
 
 			JSONArray array = new JSONArray(content);
 			if (array != null && array.length() > 0) {
@@ -254,12 +270,13 @@ public class getJson {
 		boolean back = false;
 		try {
 			@SuppressWarnings("deprecation")
-			String content = getUrlContent(
+			String content = null;
+			/* getUrlContent(
 					String.format(
 							"http://125.211.221.147/Default.aspx?compliant=11&userid=%1$s&contact=%2$s&complantContent=%3$s",
 							fedMsg.getUserid(),
 							URLEncoder.encode(fedMsg.getAddress()),
-							URLEncoder.encode(fedMsg.getContent())), 5000);
+							URLEncoder.encode(fedMsg.getContent())), 5000);*/
 			content = content.trim();
 
 			back = Boolean.parseBoolean(content);
@@ -275,10 +292,7 @@ public class getJson {
 		boolean back = false;
 		try {
 			@SuppressWarnings("deprecation")
-			String content = getUrlContent(
-					String.format(
-							"http://125.211.221.147/Default.aspx?compliantselect=11&userid=%1$s&seqid=%2$s",
-							uSerid, URLEncoder.encode(seqid)), 5000);
+			String content = null;
 			content = content.trim();
 
 			back = Boolean.parseBoolean(content);

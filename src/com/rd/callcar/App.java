@@ -16,7 +16,7 @@ public class App extends Application {
 	// 授权Key
 	// TODO: 请输入您的Key,
 	// 申请地址：http://dev.baidu.com/wiki/static/imap/key/
-	public String mStrKey = "CM140pi1hoSE3lRdxtCCOspL";
+	public String mStrKey = "0B70987E78F24D3B447D3B3484ECE61DAAE84DE9";
 	boolean m_bKeyRight = true; // 授权Key正确，验证通过
 
 	// 常用事件监听，用来处理通常的网络错误，授权验证错误等
